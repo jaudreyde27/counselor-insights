@@ -105,3 +105,11 @@ The app switches itself off after **December 15, 2026**, but that does not stop 
 Recordings stay in the bucket until the project ends and are deleted **by hand**: there is no automatic expiry. Deleting a student in the app also deletes that student's recordings.
 
 > **Model used (tested 2026-11-07):** on this free-plan account only some Claude models can be called. `us.anthropic.claude-sonnet-4-6` works and is the one we deploy with (`-c bedrockModelId=us.anthropic.claude-sonnet-4-6`). The 5.x models were refused. Re-test with a tiny fictional prompt before changing it.
+
+> **What we learned deploying (2026-11-07)**
+> - **GitHub cannot deploy to this free-plan account.** An organization-level policy on the account denies `iam:CreateOpenIDConnectProvider`, so the "GitHub deploy role" cannot be created. The `.github/workflows/deploy.yml` workflow stays in the repository but is unusable here (it does nothing without the `AWS_DEPLOY_ROLE_ARN` variable). Deploy the app with `scripts/deploy-local.sh` instead, on a fast network. Deploy the infrastructure WITHOUT `-c githubRepo=...`.
+> - **Free-plan limits hit:** database backups are limited to 1 day; only some Claude models can be called (Sonnet 4.6 works, the 5.x models do not).
+> - **Anthropic's use case form is required** before any Claude call on Bedrock: Bedrock console, a Claude model page, "Submit use case details". Without it, calls fail with "Model use case details have not been submitted".
+> - **Upload speed matters.** The app image is about 94 MB. On a slow connection the push to AWS times out; use a faster network or a phone hotspot.
+> - **Deployed settings:** hostname `studentcounseling.persimmon-care.com`, model `us.anthropic.claude-sonnet-4-6`, region `us-east-2`.
+

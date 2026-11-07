@@ -186,3 +186,10 @@ Entry format: timestamp and time zone, author, summary, affected components, ver
 - `aws login --region us-east-2` works as root on the new account (the old login link in `~/.aws/config` was cleared; backup kept outside the repo).
 - Bedrock re-tested on the new account: `us.anthropic.claude-sonnet-4-6` and Haiku 4.5 work; Sonnet 5.5 is blocked. Deploy model stays `us.anthropic.claude-sonnet-4-6`.
 - Still to do: $25 budget on the new account (excluding Credit and Refund), AssemblyAI key, GitHub repo, secrets, `cdk bootstrap`, first deploy.
+
+## 2026-11-07 — Claude (with project owner) — First deploy to the school AWS account; GitHub deploy blocked
+- Infrastructure deployed (`CREATE_COMPLETE`) in us-east-2 at studentcounseling.persimmon-care.com, app off (`desiredCount=0`). First attempt failed on the free plan's 1-day RDS backup limit; fixed in `infra/lib/database.ts` and its test. Certificate validated with one Cloudflare CNAME; second CNAME points the hostname at the load balancer. Alert-email subscription confirmed; first user created in Cognito (temporary password sent by email).
+- Adding the GitHub deploy role (`-c githubRepo=...`) FAILED: an account-level policy denies `iam:CreateOpenIDConnectProvider` on this free-plan account. Rolled back cleanly. GitHub cannot deploy here; added `scripts/deploy-local.sh` (build, push, migrate, start) as the replacement. Not run yet: the image push from this computer timed out on a ~1.2 Mbit/s upload; to be retried on a faster network.
+- Claude on Bedrock now fails with "Model use case details have not been submitted": Anthropic's use case form must be submitted in the Bedrock console (owner action). The first real analysis test is blocked until then.
+- The repository was published as a single clean commit (no account IDs, no school email) to github.com/jaudreyde27/counselor-insights.
+- Not verified: the app image running on AWS; real Cognito sign-in; Bedrock analysis; AssemblyAI webhook.

@@ -1,0 +1,100 @@
+name: Deploy
+
+# When something is merged to main: build the image, push it, run the database migrations as a one-off
+# task, then update the service (SPEC.md section 11). It signs in to AWS with a short-lived GitHub token
+# (OIDC): there are NO stored AWS keys. It does nothing until the repository variable AWS_DEPLOY_ROLE_ARN is
+# set (see docs/AWS_SETUP.md), so it is safe to have in the repository before AWS exists.
+#
+# It never creates or deletes infrastructure. That is `cdk deploy` / `cdk destroy`, run by a person.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write # lets the job ask GitHub for the short-lived token
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false # never stop a deploy half-way
+
+env:
+  AWS_REGION: us-east-2
+  STACK_NAME: CounselorInsights
+
+jobs:
+  deploy:
+    if: ${{ vars.AWS_DEPLOY_ROLE_ARN != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Read the stack's outputs (names, subnets, security group)
+        run: |
+          out() {
+            aws cloudformation describe-stacks --stack-name "$STACK_NAME" \
+              --query "Stacks[0].Outputs[?OutputKey=='$1'].OutputValue | [0]" --output text
+          }
+          {
+            echo "REPO_URI=$(out RepositoryUri)"
+            echo "CLUSTER=$(out ClusterName)"
+            echo "SERVICE=$(out ServiceName)"
+            echo "APP_FAMILY=$(out AppTaskFamily)"
+            echo "MIGRATE_FAMILY=$(out MigrateTaskFamily)"
+            echo "SUBNETS=$(out PublicSubnetIds)"
+            echo "APP_SG=$(out AppSecurityGroupId)"
+          } >> "$GITHUB_ENV"
+
+      - name: Build and push the image (tagged with this commit, and "latest")
+        run: |
+          docker build --platform linux/amd64 -t "$REPO_URI:$GITHUB_SHA" -t "$REPO_URI:latest" .
+          docker push "$REPO_URI:$GITHUB_SHA"
+          docker push "$REPO_URI:latest"
+
+      # Copies a task definition with the new image and registers it as a new revision. Prints the new ARN.
+      - name: Define a helper for new task revisions
+        run: |
+          cat > "$RUNNER_TEMP/new-revision.sh" <<'SCRIPT'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          family="$1"
+          image="$2"
+          aws ecs describe-task-definition --task-definition "$family" --query taskDefinition --output json \
+            | jq --arg image "$image" '
+                .containerDefinitions[0].image = $image
+                | del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)' \
+            > "$RUNNER_TEMP/$family.json"
+          aws ecs register-task-definition --cli-input-json "file://$RUNNER_TEMP/$family.json" \
+            --query taskDefinition.taskDefinitionArn --output text
+          SCRIPT
+          chmod +x "$RUNNER_TEMP/new-revision.sh"
+
+      - name: Run the database migrations (one-off task)
+        run: |
+          taskdef=$("$RUNNER_TEMP/new-revision.sh" "$MIGRATE_FAMILY" "$REPO_URI:$GITHUB_SHA")
+          task=$(aws ecs run-task --cluster "$CLUSTER" --launch-type FARGATE --task-definition "$taskdef" \
+            --network-configuration "awsvpcConfiguration={subnets=[$SUBNETS],securityGroups=[$APP_SG],assignPublicIp=ENABLED}" \
+            --query 'tasks[0].taskArn' --output text)
+          echo "Migration task started."
+          aws ecs wait tasks-stopped --cluster "$CLUSTER" --tasks "$task"
+          code=$(aws ecs describe-tasks --cluster "$CLUSTER" --tasks "$task" --query 'tasks[0].containers[0].exitCode' --output text)
+          if [ "$code" != "0" ]; then
+            echo "The migration failed (exit code $code). Nothing was deployed. See the /counselor-insights/app log group, stream prefix 'migrate'."
+            exit 1
+          fi
+          echo "Migrations applied."
+
+      - name: Update the service
+        run: |
+          taskdef=$("$RUNNER_TEMP/new-revision.sh" "$APP_FAMILY" "$REPO_URI:$GITHUB_SHA")
+          aws ecs update-service --cluster "$CLUSTER" --service "$SERVICE" --task-definition "$taskdef" >/dev/null
+          aws ecs wait services-stable --cluster "$CLUSTER" --services "$SERVICE"
+          echo "Deployed $GITHUB_SHA."

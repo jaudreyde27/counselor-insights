@@ -1,0 +1,12 @@
+[
+  { "speaker": "counselor", "text": "Last time you mentioned a job offer. How did that go?" },
+  { "speaker": "student", "text": "They want me to start next week, twenty hours, but I am scared to take it." },
+  { "speaker": "counselor", "text": "Tell me about the fear." },
+  { "speaker": "student", "text": "I heard if you work off campus you can lose your visa. I do not understand what is allowed and what is not, and everyone tells me something different." },
+  { "speaker": "counselor", "text": "That sounds stressful." },
+  { "speaker": "student", "text": "I keep thinking one wrong shift and I will be sent home. I can't sleep." },
+  { "speaker": "counselor", "text": "Have you asked the international office?" },
+  { "speaker": "student", "text": "I went once. They said to read the website. The website says one thing and my friend says another." },
+  { "speaker": "counselor", "text": "And money?" },
+  { "speaker": "student", "text": "My parents send what they can. Without this job I will have to skip meals at the end of the month. But I am not allowed to work this many hours, so I have to say no." }
+]

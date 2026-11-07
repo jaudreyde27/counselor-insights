@@ -1,0 +1,16 @@
+# Never copy secrets, local data, git history or heavy folders into the image.
+.env
+.env.*
+!.env.example
+.git
+.github
+.local-audio
+.next
+node_modules
+infra/node_modules
+infra/cdk.out
+docs
+fixtures
+tests
+*.log
+.claude

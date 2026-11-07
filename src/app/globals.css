@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* Design tokens from SPEC.md section 7.2 */
+@theme {
+  --color-canvas: #faf9f7;
+  --color-surface: #ffffff;
+  --color-ink: #1f2933;
+  --color-muted: #5f6c7b;
+  --color-line: #e4e7eb;
+  --color-accent: #e8702a;
+  --color-accent-dark: #c85a1b;
+  --color-accent-soft: #fdf1e8;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* A quote link opens the session page at its line; highlight that line. */
+.utterance:target {
+  background: var(--color-accent-soft);
+  outline: 1px solid color-mix(in srgb, var(--color-accent) 40%, transparent);
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}

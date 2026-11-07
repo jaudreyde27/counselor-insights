@@ -1,0 +1,66 @@
+{
+  "call1": {
+    "themes": [
+      {
+        "sub_driver_id": "interpersonal_conflict",
+        "title": "Roommate noise and feeling dismissed",
+        "interpretation": "The student describes a late-night noise problem and may have felt brushed off when they raised it.",
+        "evidence": [
+          {
+            "quote": "My roommates stay up until three in the morning and I cannot study."
+          },
+          {
+            "quote": "They said I am too sensitive"
+          }
+        ]
+      },
+      {
+        "sub_driver_id": "loneliness",
+        "title": "Feeling like an outsider at home",
+        "interpretation": "The student may feel left out in their own living space, and may be staying quiet to avoid more friction.",
+        "evidence": [
+          {
+            "quote": "I feel like an outsider in my own home."
+          },
+          {
+            "quote": "Nobody asks me to join dinner."
+          }
+        ]
+      },
+      {
+        "sub_driver_id": "financial_strain",
+        "title": "Rent is more than planned",
+        "interpretation": "The student seems to be under weekly money pressure, with a lease that is hard to leave without losing money.",
+        "evidence": [
+          {
+            "quote": "the rent is more than I planned"
+          },
+          {
+            "quote": "My scholarship covers tuition but not rent"
+          }
+        ]
+      }
+    ]
+  },
+  "call2": {
+    "recommendations": [
+      {
+        "topic": "Explore what is making home feel hard",
+        "open_question": "What would a good evening at home look like for you?",
+        "suggested_approach": "Make room for how it feels to be left out, then look at options for the noise together.",
+        "based_on_titles": [
+          "Feeling like an outsider at home",
+          "Roommate noise and feeling dismissed"
+        ]
+      },
+      {
+        "topic": "Look at the rent pressure together",
+        "open_question": "What would make the rent feel more manageable for you?",
+        "suggested_approach": "Talk through the options, and point to financial aid or housing support, including how to ask for help.",
+        "based_on_titles": [
+          "Rent is more than planned"
+        ]
+      }
+    ]
+  }
+}

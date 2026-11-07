@@ -1,0 +1,49 @@
+{
+  "name": "counselor-insights",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Counselor Insights prototype: themes, quotes and next steps from counseling sessions (fictional data only).",
+  "scripts": {
+    "dev": "next dev",
+    "build": "AUTH_MODE=off next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p infra/tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "analyze": "tsx scripts/analyze.ts",
+    "fixtures:audio": "tsx scripts/make-sample-audio.ts",
+    "db:up": "docker compose up -d --wait",
+    "db:down": "docker compose down",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "db:seed": "tsx scripts/seed.ts",
+    "db:psql": "docker compose exec db sh -c 'psql -U \"$POSTGRES_USER\" \"$POSTGRES_DB\"'"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1164.0",
+    "@aws-sdk/client-s3": "^3.1164.0",
+    "@aws-sdk/s3-request-presigner": "^3.1164.0",
+    "aws-jwt-verify": "^5.2.1",
+    "next": "16.4.5",
+    "pg": "^8.23.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.5",
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^10.14.0",
+    "eslint-config-next": "16.4.5",
+    "tailwindcss": "4.3.5",
+    "tsx": "^4.23.15",
+    "typescript": "5.9.3",
+    "vitest": "5.1.0"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

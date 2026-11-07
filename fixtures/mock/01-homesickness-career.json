@@ -1,0 +1,63 @@
+{
+  "call1": {
+    "themes": [
+      {
+        "sub_driver_id": "homesickness_grief",
+        "title": "Possible loss of professional identity",
+        "interpretation": "The student may be feeling a drop in status after leaving a professional career. \"It's fine\" and \"everything is fine\" may be covering for how much this matters.",
+        "evidence": [
+          {
+            "quote": "Back home I was an accountant, but it's fine."
+          },
+          {
+            "quote": "Here nobody knows who I am."
+          },
+          {
+            "quote": "I miss my mother's cooking so much."
+          }
+        ]
+      },
+      {
+        "sub_driver_id": "loneliness",
+        "title": "Eating alone with no one to call",
+        "interpretation": "The student may have no one nearby to turn to when something goes wrong.",
+        "evidence": [
+          {
+            "quote": "there is nobody I could call if something went wrong"
+          }
+        ]
+      },
+      {
+        "sub_driver_id": "career_norms",
+        "title": "Unsure how to write a U.S. resume",
+        "interpretation": "The student seems to want to start an internship search but is stuck on U.S. resume conventions.",
+        "evidence": [
+          {
+            "quote": "The American format is so different, and I don't know what to put or what to leave out."
+          }
+        ]
+      }
+    ]
+  },
+  "call2": {
+    "recommendations": [
+      {
+        "topic": "Explore how the student feels about their work history",
+        "open_question": "What did your work look like before you came here?",
+        "suggested_approach": "Invite them to describe their former role before asking about current plans.",
+        "based_on_titles": [
+          "Possible loss of professional identity",
+          "Eating alone with no one to call"
+        ]
+      },
+      {
+        "topic": "Offer support with the resume",
+        "open_question": "Would it help to look at a resume together, or to go to the career office with someone?",
+        "suggested_approach": "Point to resume review at the career office and offer to make the first introduction.",
+        "based_on_titles": [
+          "Unsure how to write a U.S. resume"
+        ]
+      }
+    ]
+  }
+}

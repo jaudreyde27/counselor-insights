@@ -1,0 +1,79 @@
+name: CI
+
+# On every pull request: lint, type check, tests, and a build of the app and its container image.
+# Uses a throwaway Postgres that exists only for this run. No AWS account, no secrets, no real data.
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ci_admin
+          POSTGRES_DB: counselor_insights
+          # Only reachable from inside this one job and gone when it ends, so no password is needed.
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U ci_admin -d counselor_insights"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            infra/package-lock.json
+
+      # Made up fresh for each run, used only against the throwaway database above, never printed.
+      - name: Make up throwaway settings for this run
+        run: |
+          {
+            echo "POSTGRES_USER=ci_admin"
+            echo "POSTGRES_DB=counselor_insights"
+            echo "POSTGRES_PASSWORD=$(openssl rand -hex 16)"
+            echo "APP_DB_USER=app_user"
+            echo "APP_DB_PASSWORD=$(openssl rand -hex 16)"
+            echo "DB_HOST=localhost"
+            echo "DB_PORT=5433"
+            echo "LOCAL_STORAGE_SECRET=$(openssl rand -hex 24)"
+            echo "ASSEMBLYAI_WEBHOOK_SECRET=$(openssl rand -hex 24)"
+            echo "AUTH_MODE=dev"
+            echo "LLM_MODE=mock"
+            echo "STORAGE_MODE=local"
+            echo "TRANSCRIPTION_MODE=mock"
+          } >> "$GITHUB_ENV"
+
+      - run: npm ci
+      - run: npm ci --prefix infra
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check (app and infrastructure)
+        run: npm run typecheck
+
+      - name: Tests (includes the database and infrastructure tests)
+        run: npm test
+
+      - name: Build the app
+        run: npm run build
+
+  image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the container image (not pushed)
+        run: docker build --platform linux/amd64 -t counselor-insights:ci .

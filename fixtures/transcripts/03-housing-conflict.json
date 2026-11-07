@@ -1,0 +1,14 @@
+[
+  { "speaker": "counselor", "text": "How is the new apartment working out?" },
+  { "speaker": "student", "text": "Not great. My roommates stay up until three in the morning and I cannot study." },
+  { "speaker": "counselor", "text": "Have you talked with them about it?" },
+  { "speaker": "student", "text": "I tried once. They said I am too sensitive, so now I just stay quiet." },
+  { "speaker": "counselor", "text": "How does the quiet feel?" },
+  { "speaker": "student", "text": "I feel like an outsider in my own home. Nobody asks me to join dinner." },
+  { "speaker": "counselor", "text": "What about the lease?" },
+  { "speaker": "student", "text": "I signed for twelve months and the rent is more than I planned. If I move I lose the deposit." },
+  { "speaker": "counselor", "text": "Is money a worry for you?" },
+  { "speaker": "student", "text": "Every week. My scholarship covers tuition but not rent, and I do not know how to ask the housing office for help." },
+  { "speaker": "counselor", "text": "What would asking look like?" },
+  { "speaker": "student", "text": "I do not even know which office to go to. I'm embarrassed to ask again after they gave me the wrong form." }
+]

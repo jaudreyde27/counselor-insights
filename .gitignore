@@ -1,0 +1,72 @@
+# Dependencies
+node_modules/
+
+# Secrets and environment files (never commit keys or passwords)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+secrets/
+credentials.json
+service-account*.json
+
+# Build output
+dist/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.turbo/
+.cache/
+coverage/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Docker local overrides
+docker-compose.override.yml
+
+# Local databases / data volumes
+*.sqlite
+*.sqlite3
+pgdata/
+.data/
+
+# macOS
+.DS_Store
+.AppleDouble
+.Spotlight-V100
+.Trashes
+
+# Editors / IDEs
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Temp files
+tmp/
+*.tmp
+
+# TypeScript / Next generated
+*.tsbuildinfo
+next-env.d.ts
+
+# Local development audio (stand-in for the S3 bucket)
+.local-audio/
+
+# CDK
+infra/cdk.out/
+infra/cdk.context.json
+infra/node_modules/

@@ -1,0 +1,60 @@
+{
+  "call1": {
+    "themes": [
+      {
+        "sub_driver_id": "fear_anxiety",
+        "title": "Worry about running out of time to find a job",
+        "interpretation": "The student seems to be counting down the time they have left, which may be keeping them awake.",
+        "evidence": [
+          {
+            "quote": "I lie awake doing the math on how many months I have left."
+          }
+        ]
+      },
+      {
+        "sub_driver_id": "job_market_access",
+        "title": "Employers unwilling to sponsor",
+        "interpretation": "The student describes employers ruling them out, and may be giving up on applications as a result.",
+        "evidence": [
+          {
+            "quote": "Every company says they can't sponsor, so I just stop applying."
+          },
+          {
+            "quote": "half the employers on it do not hire international students at all"
+          }
+        ]
+      },
+      {
+        "sub_driver_id": "professional_network",
+        "title": "No contacts in the industry",
+        "interpretation": "The student has academic connections but may not know anyone who can help with hiring.",
+        "evidence": [
+          {
+            "quote": "I don't know anyone in this industry."
+          }
+        ]
+      }
+    ]
+  },
+  "call2": {
+    "recommendations": [
+      {
+        "topic": "Look at where the student's network could grow",
+        "open_question": "Who have you met so far who works in this industry?",
+        "suggested_approach": "Brainstorm alumni and professor connections together and plan one first outreach message.",
+        "based_on_titles": [
+          "No contacts in the industry",
+          "Employers unwilling to sponsor"
+        ]
+      },
+      {
+        "topic": "Talk through the worry about time",
+        "open_question": "What does the time pressure feel like day to day?",
+        "suggested_approach": "Let them describe the worry before turning to a search plan, and check how much sleep they are getting.",
+        "based_on_titles": [
+          "Worry about running out of time to find a job"
+        ]
+      }
+    ]
+  }
+}

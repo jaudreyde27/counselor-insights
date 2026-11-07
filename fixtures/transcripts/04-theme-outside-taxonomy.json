@@ -1,0 +1,12 @@
+[
+  { "speaker": "counselor", "text": "What would you like to talk about today?" },
+  { "speaker": "student", "text": "Honestly, school is okay. What is hard is that I used to pray five times a day with my community, and here I do it in the library stairwell." },
+  { "speaker": "counselor", "text": "How does that feel?" },
+  { "speaker": "student", "text": "Like I have to hide a part of me. There is no prayer room on campus that I know of, and Fridays I miss the congregational prayer because of my lab." },
+  { "speaker": "counselor", "text": "Have you asked about a prayer room?" },
+  { "speaker": "student", "text": "No, I did not know if I was allowed to ask." },
+  { "speaker": "counselor", "text": "What else is going on?" },
+  { "speaker": "student", "text": "I have three exams in one week and I keep starting to study too late. I plan to start at six and then it is midnight." },
+  { "speaker": "counselor", "text": "Is that new?" },
+  { "speaker": "student", "text": "It was easier at home, my mother kept the schedule for the house." }
+]

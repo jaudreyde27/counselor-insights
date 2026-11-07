@@ -1,0 +1,77 @@
+{
+  "call1": {
+    "themes": [
+      {
+        "sub_driver_id": "fear_anxiety",
+        "title": "Fear of making a work mistake with serious consequences",
+        "interpretation": "The student appears to be worried that a small mistake could have a very large consequence for their stay.",
+        "evidence": [
+          {
+            "quote": "I am scared to take it."
+          },
+          {
+            "quote": "I heard if you work off campus you can lose your visa."
+          },
+          {
+            "quote": "I keep thinking one wrong shift and I will be sent home."
+          }
+        ]
+      },
+      {
+        "sub_driver_id": "visa_work_rules",
+        "title": "Unclear on what work is allowed",
+        "interpretation": "The student seems unsure what the work rules allow and has heard conflicting answers.",
+        "evidence": [
+          {
+            "quote": "I do not understand what is allowed and what is not"
+          },
+          {
+            "quote": "everyone tells me something different"
+          }
+        ]
+      },
+      {
+        "sub_driver_id": "visa_work_restrictions",
+        "title": "Work-hour limits blocking a job offer",
+        "interpretation": "The student describes a limit on working hours that stands in the way of an offer they would otherwise take.",
+        "evidence": [
+          {
+            "quote": "I am not allowed to work this many hours, so I have to say no."
+          }
+        ]
+      },
+      {
+        "sub_driver_id": "financial_strain",
+        "title": "Money is tight at the end of the month",
+        "interpretation": "The student may be facing real money pressure if the job offer does not work out.",
+        "evidence": [
+          {
+            "quote": "I will have to skip meals at the end of the month"
+          }
+        ]
+      }
+    ]
+  },
+  "call2": {
+    "recommendations": [
+      {
+        "topic": "Help the student get a clear answer on what work is allowed",
+        "open_question": "What have you heard so far, and from whom?",
+        "suggested_approach": "Write down the specific questions together and help them book a time with the right office to ask them.",
+        "based_on_titles": [
+          "Unclear on what work is allowed",
+          "Work-hour limits blocking a job offer"
+        ]
+      },
+      {
+        "topic": "Make room for the worry before problem-solving",
+        "open_question": "What goes through your mind when you think about starting the job?",
+        "suggested_approach": "Let them describe the worry in their own words, then look at the money question as a separate step.",
+        "based_on_titles": [
+          "Fear of making a work mistake with serious consequences",
+          "Money is tight at the end of the month"
+        ]
+      }
+    ]
+  }
+}

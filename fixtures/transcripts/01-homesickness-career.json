@@ -1,0 +1,16 @@
+[
+  { "speaker": "counselor", "text": "Thanks for coming in today. How have things been since we last talked?" },
+  { "speaker": "student", "text": "Busy, mostly. Classes are fine. Back home I was an accountant, but it's fine." },
+  { "speaker": "counselor", "text": "You mentioned being an accountant. What was that like?" },
+  { "speaker": "student", "text": "I managed a small team. People asked me for answers. Here nobody knows who I am." },
+  { "speaker": "counselor", "text": "That sounds like a big change." },
+  { "speaker": "student", "text": "Yes. Sometimes I eat dinner alone in my room and there is nobody I could call if something went wrong." },
+  { "speaker": "counselor", "text": "What does a normal evening look like for you?" },
+  { "speaker": "student", "text": "I cook rice, I scroll my phone, I go to sleep. I miss my mother's cooking so much." },
+  { "speaker": "counselor", "text": "Have you started looking for internships?" },
+  { "speaker": "student", "text": "I tried to write a resume. The American format is so different, and I don't know what to put or what to leave out." },
+  { "speaker": "counselor", "text": "Has anyone looked at it with you?" },
+  { "speaker": "student", "text": "No. I do not know who to ask. I did not want to bother the career office." },
+  { "speaker": "counselor", "text": "Okay. Anything else on your mind?" },
+  { "speaker": "student", "text": "Not really. Everything is fine." }
+]

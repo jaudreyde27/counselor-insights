@@ -1,0 +1,53 @@
+{
+  "version": "1.1",
+  "domains": [
+    { "id": "emotional_burden", "label": "Emotional Burden", "tagline": "How it feels" },
+    { "id": "skill_knowledge_gaps", "label": "Skill & Knowledge Gaps", "tagline": "They don't know how" },
+    { "id": "external_barriers", "label": "External Barriers", "tagline": "They know how, but something outside blocks them" }
+  ],
+  "sub_drivers": [
+    { "id": "homesickness_grief", "domain_id": "emotional_burden", "group": null, "label": "Homesickness and grief", "description": "Missing family and food, mourning a former role (\"I was somebody back home\")" },
+    { "id": "loneliness", "domain_id": "emotional_burden", "group": null, "label": "Loneliness", "description": "Eating alone, having no one to call when something goes wrong" },
+    { "id": "shame_embarrassment", "domain_id": "emotional_burden", "group": null, "label": "Shame and embarrassment", "description": "Mortified after a mistake in class, hiding that they are struggling" },
+    { "id": "guilt", "domain_id": "emotional_burden", "group": null, "label": "Guilt", "description": "Feeling they are wasting what the family sacrificed, enjoying life while family struggles back home" },
+    { "id": "self_doubt", "domain_id": "emotional_burden", "group": null, "label": "Self-doubt", "description": "\"Everyone else belongs here but me,\" wondering if they were admitted by mistake" },
+    { "id": "fear_anxiety", "domain_id": "emotional_burden", "group": null, "label": "Fear and anxiety", "description": "Dread of failing a class, losing visa status, or having no job after graduation" },
+    { "id": "frustration_resentment", "domain_id": "emotional_burden", "group": null, "label": "Frustration and resentment", "description": "Anger at confusing systems, at being treated as an outsider" },
+    { "id": "exhaustion_burnout", "domain_id": "emotional_burden", "group": null, "label": "Exhaustion and burnout", "description": "Constantly translating and adapting, running on little sleep" },
+
+    { "id": "english_comprehension_expression", "domain_id": "skill_knowledge_gaps", "group": null, "label": "English comprehension and expression", "description": null },
+    { "id": "cultural_social_norms", "domain_id": "skill_knowledge_gaps", "group": null, "label": "Cultural and social norms", "description": null },
+    { "id": "academic_norms", "domain_id": "skill_knowledge_gaps", "group": null, "label": "Academic norms", "description": "Participation, office hours, writing and citation" },
+    { "id": "career_norms", "domain_id": "skill_knowledge_gaps", "group": null, "label": "Career norms", "description": "How to write a U.S. resume, interview, network" },
+    { "id": "daily_life_systems", "domain_id": "skill_knowledge_gaps", "group": null, "label": "Daily-life systems", "description": "How to open a bank account, find housing, use insurance, get around" },
+    { "id": "visa_work_rules", "domain_id": "skill_knowledge_gaps", "group": null, "label": "Visa and work rules", "description": "What is and is not allowed, how to keep status" },
+    { "id": "money_management", "domain_id": "skill_knowledge_gaps", "group": null, "label": "Money management", "description": "How credit, budgeting and taxes work" },
+    { "id": "self_advocacy", "domain_id": "skill_knowledge_gaps", "group": null, "label": "Self-advocacy", "description": "How to ask for help and speak up for their needs with anyone (professors, landlords, doctors, offices, employers)" },
+    { "id": "study_time_management", "domain_id": "skill_knowledge_gaps", "group": null, "label": "Study and time management", "description": null },
+
+    { "id": "visa_work_restrictions", "domain_id": "external_barriers", "group": "Rules & Institutions", "label": "Visa and work restrictions", "description": "Limits on working, earning or traveling" },
+    { "id": "institutional_bureaucracy", "domain_id": "external_barriers", "group": "Rules & Institutions", "label": "Institutional bureaucracy", "description": "Slow or conflicting answers from offices and advisors" },
+    { "id": "program_funding_requirements", "domain_id": "external_barriers", "group": "Rules & Institutions", "label": "Program and funding requirements", "description": "GPA or enrollment minimums" },
+    { "id": "financial_strain", "domain_id": "external_barriers", "group": "Rules & Institutions", "label": "Financial strain", "description": "Tuition, living costs, unexpected expenses" },
+
+    { "id": "job_market_access", "domain_id": "external_barriers", "group": "Career & Network", "label": "Job market access", "description": "Few roles open to international students, employers unwilling to sponsor" },
+    { "id": "professional_network", "domain_id": "external_barriers", "group": "Career & Network", "label": "Professional network", "description": "No contacts, mentors or alumni access" },
+    { "id": "credential_recognition", "domain_id": "external_barriers", "group": "Career & Network", "label": "Credential recognition", "description": "Home-country degrees or experience not valued" },
+
+    { "id": "social_support", "domain_id": "external_barriers", "group": "People & Community", "label": "Social support", "description": "No local network" },
+    { "id": "discrimination_exclusion", "domain_id": "external_barriers", "group": "People & Community", "label": "Discrimination and exclusion", "description": null },
+    { "id": "interpersonal_conflict", "domain_id": "external_barriers", "group": "People & Community", "label": "Interpersonal conflict", "description": "Roommates, groupmates" },
+    { "id": "family_obligations", "domain_id": "external_barriers", "group": "People & Community", "label": "Family obligations", "description": "Caregiving, financial support, crisis back home" },
+    { "id": "help_seeking_stigma", "domain_id": "external_barriers", "group": "People & Community", "label": "Help-seeking stigma", "description": "From family, peers or culture" },
+    { "id": "living_conditions", "domain_id": "external_barriers", "group": "People & Community", "label": "Living conditions", "description": "Unsafe, unstable or hard-to-reach housing, food, transport, healthcare" }
+  ],
+  "classification_rules": [
+    "Which domain: a feeling goes in Emotional Burden. \"I don't know how\" goes in Skill & Knowledge Gaps. \"I know how, but I can't, or it isn't there\" goes in External Barriers.",
+    "Buckets: it is fine for a student to have nothing in some of the three domains. Themes can sit in only one domain (for example only Emotional Burden, or only External Barriers) or in any combination (for example Emotional Burden and Skill & Knowledge Gaps). Never add a theme just to fill a domain.",
+    "Emotion vs. cause: Emotional Burden names only the feeling. The cause comes from the other two domains.",
+    "Visa test case: the fear is Fear and anxiety, not understanding the rules is a Skill & Knowledge Gap, and the restrictions are Visa and work restrictions.",
+    "Employer vs. system: an employer refusing to sponsor is Job market access. The visa rule itself is Visa and work restrictions.",
+    "Professional vs. personal: career contacts are Professional network. Friends, family and local support are Social support.",
+    "Privacy: the tool tags visa fear as a theme and never records an actual immigration status."
+  ]
+}

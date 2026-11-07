@@ -1,0 +1,21 @@
+{
+  "name": "counselor-insights-infra",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AWS CDK (TypeScript) infrastructure for the Counselor Insights prototype. Nothing here has been deployed.",
+  "scripts": {
+    "synth": "cdk synth",
+    "diff": "cdk diff",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.275.0",
+    "constructs": "10.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "aws-cdk": "2.1148.0",
+    "tsx": "^4.23.15",
+    "typescript": "5.9.3"
+  }
+}

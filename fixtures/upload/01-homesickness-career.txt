@@ -1,0 +1,14 @@
+Counselor: Thanks for coming in today. How have things been since we last talked?
+Student: Busy, mostly. Classes are fine. Back home I was an accountant, but it's fine.
+Counselor: You mentioned being an accountant. What was that like?
+Student: I managed a small team. People asked me for answers. Here nobody knows who I am.
+Counselor: That sounds like a big change.
+Student: Yes. Sometimes I eat dinner alone in my room and there is nobody I could call if something went wrong.
+Counselor: What does a normal evening look like for you?
+Student: I cook rice, I scroll my phone, I go to sleep. I miss my mother's cooking so much.
+Counselor: Have you started looking for internships?
+Student: I tried to write a resume. The American format is so different, and I don't know what to put or what to leave out.
+Counselor: Has anyone looked at it with you?
+Student: No. I do not know who to ask. I did not want to bother the career office.
+Counselor: Okay. Anything else on your mind?
+Student: Not really. Everything is fine.

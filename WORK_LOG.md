@@ -193,3 +193,8 @@ Entry format: timestamp and time zone, author, summary, affected components, ver
 - Claude on Bedrock now fails with "Model use case details have not been submitted": Anthropic's use case form must be submitted in the Bedrock console (owner action). The first real analysis test is blocked until then.
 - The repository was published as a single clean commit (no account IDs, no school email) to github.com/jaudreyde27/counselor-insights.
 - Not verified: the app image running on AWS; real Cognito sign-in; Bedrock analysis; AssemblyAI webhook.
+
+## 2026-11-07 — Claude (with project owner) — First real Claude analysis check (Bedrock, Sonnet 4.6)
+- After the Anthropic use case form was submitted, Bedrock calls work. Ran `npm run analyze` (LLM_MODE=real, us.anthropic.claude-sonnet-4-6, us-east-2) on two fictional fixtures: 02-visa-fear and 05-status-stated. Both: 4 themes, 2 recommendations, 0 quotes failed verification, nothing dropped. Immigration status was not stated or inferred in the 05 output. Themes sit in sensible buckets and wording tracks the student's language.
+- Observations to review by a person (not bugs): in 02 the same quote supports two themes (line 8) and one theme title uses "visa status" (the student's own words); in 05 the sleep line appears under two themes. Only 2 of 5 fixtures run so far; 01, 03 and 04 not yet run for real.
+- Not committed to the public repo yet.

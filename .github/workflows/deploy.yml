@@ -1,9 +1,14 @@
 name: Deploy
 
 # When something is merged to main: build the image, push it, run the database migrations as a one-off
-# task, then update the service (SPEC.md section 11). It signs in to AWS with a short-lived GitHub token
-# (OIDC): there are NO stored AWS keys. It does nothing until the repository variable AWS_DEPLOY_ROLE_ARN is
-# set (see docs/AWS_SETUP.md), so it is safe to have in the repository before AWS exists.
+# task, then update the service (SPEC.md section 11).
+#
+# Sign-in to AWS: the school AWS account is on the free plan, which blocks the GitHub OIDC connection, so this
+# uses the access key of a DEPLOY-ONLY AWS user (counselor-insights-github-deployer: it can push the image,
+# run the migration and update the service, nothing else). The key lives only in the encrypted secrets of the
+# GitHub "production" environment, which only the `main` branch can read. This is a deliberate exception to
+# "no stored AWS keys" (AGENTS.md / CLAUDE.md). The key and the user are deleted when the project ends
+# (docs/SHUTDOWN.md). On an account that allows OIDC, use a role instead (infra/lib/github.ts, GithubDeploy).
 #
 # It never creates or deletes infrastructure. That is `cdk deploy` / `cdk destroy`, run by a person.
 on:
@@ -11,7 +16,6 @@ on:
     branches: [main]
 
 permissions:
-  id-token: write # lets the job ask GitHub for the short-lived token
   contents: read
 
 concurrency:
@@ -24,14 +28,16 @@ env:
 
 jobs:
   deploy:
-    if: ${{ vars.AWS_DEPLOY_ROLE_ARN != '' }}
+    if: ${{ github.repository == 'jaudreyde27/counselor-insights' }} # forks never try to deploy
+    environment: production # holds the AWS secrets; limited to the main branch
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
       - id: ecr

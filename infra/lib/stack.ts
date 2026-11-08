@@ -5,7 +5,7 @@ import { App } from "./app";
 import { Auth } from "./auth";
 import type { InfraConfig } from "./config";
 import { Database } from "./database";
-import { GithubDeploy } from "./github";
+import { GithubDeploy, GithubDeployUser } from "./github";
 import { Monitoring } from "./monitoring";
 import { Network } from "./network";
 import { Storage } from "./storage";
@@ -35,6 +35,10 @@ export class CounselorInsightsStack extends Stack {
       });
     }
 
+    // For accounts where the GitHub connection above is blocked (the free plan): a deploy-only user instead.
+    let deployUser: GithubDeployUser | undefined;
+    if (config.deployUser) deployUser = new GithubDeployUser(this, "GithubDeployUser", { app });
+
     // ---- Outputs: what the deploy workflow, the DNS step and the .env need ----
     const out = (id: string, value: string, description: string) => new CfnOutput(this, id, { value, description });
     out("Hostname", config.appHostname, "Where the app lives");
@@ -53,6 +57,7 @@ export class CounselorInsightsStack extends Stack {
     out("AudioBucketName", storage.bucket.bucketName, "Private bucket holding recordings");
     out("DeactivatesAfter", config.activeUntil, "The app switches itself off after the end of this day (Pacific time)");
     out("ScaledToZeroAt", config.scaleToZeroAt, "The app server is scaled to zero at this moment");
+    if (deployUser) out("GithubDeployUserName", deployUser.user.userName, "Create its access key by hand and store it in GitHub secrets (docs/AWS_SETUP.md); delete both when the project ends");
     if (deployRole) out("GithubDeployRoleArn", deployRole.role.roleArn, "Put this in the GitHub repository variable AWS_DEPLOY_ROLE_ARN");
   }
 }

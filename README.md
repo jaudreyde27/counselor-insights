@@ -87,12 +87,14 @@ This is a class project, due **December 2, 2026**, and it is **switched off afte
 
 ## Deploying
 
-The app runs on AWS in **us-east-2** (one stack, `CounselorInsights`). **Only the project owner deploys**, from their own computer, because the AWS account is on the free plan and an account-level rule blocks the GitHub-to-AWS connection that automatic deploys would need. So merging to `main` does **not** change the live site.
+The app runs on AWS in **us-east-2** (one stack, `CounselorInsights`).
 
-- **To deploy a change:** the project owner runs `aws login --region us-east-2`, then `scripts/deploy-local.sh` (builds the image, pushes it, runs the database migration and starts the new version). Use a fast network: the image is about 94 MB.
+- **Normal deploy (automatic):** merging a pull request into `main` deploys it. GitHub Actions (`.github/workflows/deploy.yml`) builds the image, pushes it, runs the database migration and starts the new version, in about 5 to 8 minutes. Teammates never need AWS access. Watch it under the repository's **Actions** tab; if it fails, the live site keeps running the previous version.
+- **How it signs in to AWS:** the school AWS account is on the free plan, which blocks GitHub's normal short-lived sign-in (OIDC). So the workflow uses the key of a **deploy-only AWS user** that can push the image, run the migration and update the service, and nothing else. The key lives only in the encrypted secrets of the GitHub `production` environment (readable only by `main`). Never copy it anywhere else, and never add other AWS keys.
+- **Manual deploy (backup):** the project owner can run `aws login --region us-east-2` and then `scripts/deploy-local.sh` from their computer. It is slow on a laptop (the image is built for another chip type, and uploads about 94 MB).
 - **Container:** `Dockerfile` (the app, plus a one-off migration runner). **Infrastructure (AWS CDK, TypeScript):** `infra/` (network with no NAT gateway, RDS Postgres 16, a private audio bucket, Cognito, a load balancer with HTTPS, one Fargate task, alarms, CloudTrail, a scheduled scale to zero for December 16, 2026). `cd infra && npx cdk synth ...` produces the template offline; `npm test` checks it.
 - **Sign-in:** `AUTH_MODE=cognito` (Cognito Managed Login with PKCE). Local development uses `AUTH_MODE=dev`, which is refused in a production build.
-- **CI (GitHub Actions):** `.github/workflows/ci.yml` runs lint, type check, tests and a build on every pull request. `deploy.yml` stays in the repository but is inactive here (it needs the `AWS_DEPLOY_ROLE_ARN` variable, which this account cannot create).
+- **CI (GitHub Actions):** `.github/workflows/ci.yml` runs lint, type check, tests and a build on every pull request. Do not merge a pull request whose checks fail.
 - **Secrets and DNS:** `scripts/store-secret.sh` stores keys in Secrets Manager without them appearing anywhere; `scripts/dns-records.sh` prints the DNS records. **New teammates:** `scripts/add-user.sh email@example.com`.
 - **Ending:** the app switches itself off after December 15, 2026; the cloud teardown is in [`docs/SHUTDOWN.md`](docs/SHUTDOWN.md).
 

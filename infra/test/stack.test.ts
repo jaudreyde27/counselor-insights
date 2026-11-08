@@ -16,6 +16,7 @@ const CONFIG: InfraConfig = {
   scaleToZeroAt: "2026-12-16T08:00:00Z",
   region: "us-east-2",
   githubRepo: "owner/name",
+  deployUser: false,
 };
 
 const build = (over: Partial<InfraConfig> = {}) =>
@@ -317,5 +318,37 @@ describe("startup secrets", () => {
       expect(json).toContain(`:secret:${name}"`); // the exact name, with no "-??????" after it
     }
     expect(json).not.toContain(`"arn:aws:secretsmanager:*`); // never a wildcard on all secrets
+  });
+});
+
+describe("the deploy-only user for GitHub (accounts that block the GitHub connection)", () => {
+  const withUser = build({ deployUser: true, githubRepo: undefined });
+  const users = () => Object.values(withUser.findResources("AWS::IAM::User")) as Array<{ Properties: Record<string, unknown> }>;
+
+  it("is off by default and only created when asked for", () => {
+    expect(JSON.stringify(t.toJSON())).not.toContain("counselor-insights-github-deployer");
+    expect(users()).toHaveLength(1);
+    expect(users()[0].Properties.UserName).toBe("counselor-insights-github-deployer");
+  });
+
+  it("has no console password and no access key in the template (the key is made by hand and never written down)", () => {
+    expect(users()[0].Properties.LoginProfile).toBeUndefined();
+    withUser.resourceCountIs("AWS::IAM::AccessKey", 0);
+  });
+
+  it("has exactly the deploy permissions and nothing that could create, delete or read data", () => {
+    const managed = Object.values(withUser.findResources("AWS::IAM::ManagedPolicy")).filter((p) => JSON.stringify(p).includes("Deploy-only permissions for GitHub Actions"));
+    expect(managed).toHaveLength(1);
+    // AWS allows 6144 bytes in a managed policy (and only 2048 inline on a user): stay well under so a deploy never fails on size.
+    expect(JSON.stringify((managed[0] as { Properties: { PolicyDocument: unknown } }).Properties.PolicyDocument).length).toBeLessThan(5000);
+    const stmts = managed.flatMap((p) => (p as { Properties: { PolicyDocument: { Statement: Array<{ Action: string | string[] }> } } }).Properties.PolicyDocument.Statement);
+    const actions = stmts.flatMap((x) => (Array.isArray(x.Action) ? x.Action : [x.Action]));
+    for (const a of ["ecr:GetAuthorizationToken", "ecs:RunTask", "ecs:UpdateService", "ecs:RegisterTaskDefinition", "iam:PassRole", "cloudformation:DescribeStacks"]) expect(actions).toContain(a);
+    for (const a of actions) expect(a, a).not.toMatch(/Create|Delete(?!Stack)|rds:|s3:|cognito|ec2:|secretsmanager|bedrock|\*$/);
+    expect(actions).not.toContain("iam:*");
+  });
+
+  it("rejects a value that is not true or false", () => {
+    expect(() => buildConfig((k) => ({ alertEmail: "a@x.test", cognitoDomainPrefix: "my-team", bedrockModelId: "us.anthropic.claude-test", deployUser: "maybe" } as Record<string, unknown>)[k])).toThrow(/deployUser/);
   });
 });

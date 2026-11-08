@@ -215,3 +215,9 @@ Entry format: timestamp and time zone, author, summary, affected components, ver
 
 ## 2026-11-07 — Claude (with project owner) — README brought up to date for teammates
 - README status, "Try the live prototype" (how to get a profile, add a session, fictional-data rule, feedback), Deploying (only the project owner deploys, via `scripts/deploy-local.sh`; GitHub cannot deploy to this free-plan account) and the audio/AI notes now match what actually runs. Verified: deleting a student empties their recording from the audio bucket.
+
+## 2026-11-08 — Claude (with project owner) — GitHub deploys with a deploy-only AWS user
+- Teammates need to deploy, but the free-plan AWS account blocks the GitHub OIDC connection and the owner does not want to pay to upgrade. Project owner approved a narrow exception to "no stored AWS keys": a deploy-only IAM user `counselor-insights-github-deployer` (new `GithubDeployUser` in `infra/lib/github.ts`, enabled with `-c deployUser=true`; same permissions as the OIDC role, as a managed policy because AWS caps a user's inline policy at 2 KB; first deploy attempt failed on that limit, fixed and tested with a size guard). 37 infra tests pass.
+- Its access key was created by `aws iam create-access-key` and piped straight into the GitHub `production` environment secrets (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`) without being shown or written anywhere. The environment only allows the `main` branch. `deploy.yml` now uses those secrets and the `production` environment (no OIDC, no role variable); rules updated in AGENTS.md and CLAUDE.md; SHUTDOWN.md says to delete the key before `cdk destroy`.
+- Invited `troy-zen` as a collaborator (Write). Branch protection for `main` is set up after the first proving deploy.
+- Always pass `-c deployUser=true` on `cdk deploy` or CloudFormation will try to remove the user.

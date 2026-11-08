@@ -23,6 +23,8 @@ export interface InfraConfig {
   region: string;
   /** "owner/name" of the GitHub repository allowed to deploy (optional until the repository exists). */
   githubRepo?: string;
+  /** true: also create a deploy-only AWS user for GitHub Actions (for accounts that block the GitHub OIDC connection). */
+  deployUser: boolean;
   /** If the AWS account already has a GitHub OIDC provider, its ARN (only one may exist per account). */
   githubOidcProviderArn?: string;
 }
@@ -84,6 +86,8 @@ export function buildConfig(get: (key: string) => unknown): InfraConfig {
   const githubRepo = str("githubRepo");
   if (githubRepo && !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(githubRepo)) problems.push(`githubRepo "${githubRepo}" must look like owner/name.`);
   const githubOidcProviderArn = str("githubOidcProviderArn");
+  const deployUserRaw = str("deployUser", "false")!.toLowerCase();
+  if (deployUserRaw !== "true" && deployUserRaw !== "false") problems.push(`deployUser must be true or false (got "${deployUserRaw}").`);
 
   if (problems.length) {
     throw new Error(`The deployment settings need fixing:\n - ${problems.join("\n - ")}`);
@@ -100,5 +104,6 @@ export function buildConfig(get: (key: string) => unknown): InfraConfig {
     region: str("region", DEFAULTS.region)!,
     githubRepo,
     githubOidcProviderArn,
+    deployUser: deployUserRaw === "true",
   };
 }

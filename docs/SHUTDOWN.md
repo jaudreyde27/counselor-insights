@@ -42,12 +42,12 @@ Do this after the project is graded and before you stop needing the data. **Each
 
 1. **Keep what you need first.** Take screenshots or exports for your report. Nothing in the app is kept anywhere else.
 2. **Empty and delete the recordings** (the S3 bucket must be empty before it can be removed). Recordings are not deleted automatically (see "Audio retention" in the README).
-3. **Destroy the stack** (`cdk destroy`). This removes the app server, load balancer, database, login, bucket and logs. Check first that it does not leave behind the database snapshot or the bucket.
+3. **Delete the deploy-only user's access key first** (see step 8; a user with a key cannot be deleted by the stack), then **destroy the stack** (`cdk destroy`). This removes the app server, load balancer, database, login, bucket and logs. Check first that it does not leave behind the database snapshot or the bucket.
 4. **Delete the secrets** in AWS Secrets Manager (`counselor-insights/...`). AWS may keep a deleted secret for a recovery period unless you force-delete it.
 5. **Remove the two Cloudflare DNS records** for `studentcounseling` (the certificate validation record and the app address). Leave every other record, especially `tracker`, alone.
 6. **AssemblyAI:** delete the API key, and any transcripts still stored there. Close the account if you do not need it.
 7. **AWS Budgets and the account:** delete the budget when you no longer need it, and close the AWS account if it was made only for this.
-8. **GitHub:** archive or delete the repository. It contains no real data and no keys, but it is private for a reason.
+8. **GitHub:** first delete the deploy key: `aws iam list-access-keys --user-name counselor-insights-github-deployer`, then `aws iam delete-access-key` for each, and delete the two secrets in the repository's `production` environment. (`cdk destroy` in step 3 removes the AWS user itself, but only after its key is gone.) Then archive or delete the repository. It contains no real data and no keys, and is public by choice.
 9. **Your computer:** `docker compose down -v` removes the local database, and deleting the `.local-audio` folder removes local recordings.
 
 ## Why the date is built into the code

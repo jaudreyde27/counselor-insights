@@ -17,7 +17,8 @@ import type { Storage } from "./storage";
 
 /** Names of the secrets made by scripts/store-secret.sh. They must exist BEFORE the app first starts. */
 export const ASSEMBLYAI_KEY_SECRET = "counselor-insights/assemblyai-api-key";
-export const ASSEMBLYAI_WEBHOOK_SECRET = "counselor-insights/assemblyai-webhook-secret";
+// NOTE: never end a secret name with a hyphen plus exactly 6 characters (like "-secret"): AWS mistakes that for its own random suffix and denies access.
+export const ASSEMBLYAI_WEBHOOK_SECRET = "counselor-insights/assemblyai-webhook-token";
 
 /**
  * The app (SPEC.md section 10): a container registry, one Fargate task behind a load balancer with HTTPS
@@ -131,6 +132,19 @@ export class App extends Construct {
         ASSEMBLYAI_WEBHOOK_SECRET: ecs.Secret.fromSecretsManager(assemblyAiWebhook),
       },
     });
+
+    // ECS asks for these two secrets by their plain name (no random 6-character suffix), and the grant CDK writes
+    // for an imported secret only matches "name-XXXXXX". Without this, the app fails to start with AccessDenied
+    // (seen on the first real deploy, 2026-11-07). Allow exactly these two names, nothing broader.
+    this.appTask.executionRole!.addToPrincipalPolicy(
+      new iam.PolicyStatement({
+        sid: "ReadAssemblyAiSecretsByName",
+        actions: ["secretsmanager:GetSecretValue"],
+        resources: [ASSEMBLYAI_KEY_SECRET, ASSEMBLYAI_WEBHOOK_SECRET].map(
+          (name) => `arn:aws:secretsmanager:${stack.region}:${stack.account}:secret:${name}`,
+        ),
+      }),
+    );
 
     // ---- The one-off migration task (run before each deploy) ----
     this.migrateTask = new ecs.FargateTaskDefinition(this, "MigrateTask", {

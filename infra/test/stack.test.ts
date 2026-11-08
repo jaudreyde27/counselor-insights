@@ -309,3 +309,13 @@ describe("deploying from GitHub with no stored AWS keys", () => {
     expect(JSON.stringify(reuse.toJSON())).toContain("oidc-provider/token.actions.githubusercontent.com");
   });
 });
+
+describe("startup secrets", () => {
+  it("the app's startup role may read the two AssemblyAI secrets by their plain names (ECS asks without the random suffix)", () => {
+    const json = JSON.stringify(build().toJSON());
+    for (const name of ["counselor-insights/assemblyai-api-key", "counselor-insights/assemblyai-webhook-token"]) {
+      expect(json).toContain(`:secret:${name}"`); // the exact name, with no "-??????" after it
+    }
+    expect(json).not.toContain(`"arn:aws:secretsmanager:*`); // never a wildcard on all secrets
+  });
+});

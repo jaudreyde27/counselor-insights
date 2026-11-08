@@ -21,7 +21,7 @@ case "$KIND" in
     DESC="AssemblyAI API key for the Counselor Insights prototype"
     ;;
   webhook-secret)
-    NAME="$PREFIX/assemblyai-webhook-secret"
+    NAME="$PREFIX/assemblyai-webhook-token"
     DESC="Secret header AssemblyAI sends on its webhook call"
     ;;
   *)

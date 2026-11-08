@@ -7,10 +7,9 @@ import { authMode, requireCounselor, signInDev, signOut } from "@/lib/auth";
 import { cognitoConfig, logoutUrl } from "@/lib/auth/cognito";
 import { withCounselor } from "@/lib/db";
 import { audit } from "@/lib/data/audit";
-import { audioKeysForStudent, createAudioSession, createPastedSession, swapSpeakers } from "@/lib/data/sessions";
-import { createStudent, deleteStudent, type StudentInput } from "@/lib/data/students";
+import { createAudioSession, createPastedSession } from "@/lib/data/sessions";
+import { createStudent, type StudentInput } from "@/lib/data/students";
 import type { FormState } from "@/lib/form-state";
-import { logEvent } from "@/lib/log";
 import { getAudioStorage } from "@/lib/storage";
 import { audioTypeFor, UPLOAD_URL_SECONDS } from "@/lib/storage/audio-types";
 import { isDegreeType, isSchool } from "@/lib/student-options";
@@ -112,21 +111,6 @@ export async function createStudentAction(_prev: FormState, formData: FormData):
 
   if (sessionId) after(() => startAnalysis(c.id, sessionId));
   redirect(`/students/${studentId}`);
-}
-
-export async function deleteStudentAction(formData: FormData): Promise<void> {
-  const c = await requireCounselor();
-  const id = idOf(formData, "student_id");
-  if (id) {
-    const keys = await withCounselor(c.id, (client) => audioKeysForStudent(client, id));
-    const deleted = await withCounselor(c.id, (client) => deleteStudent(client, c.id, id));
-    // The recordings go with the student (best effort; a leftover file is logged, never shown).
-    if (deleted) {
-      const storage = getAudioStorage();
-      await Promise.all(keys.map((k) => storage.remove(k).catch(() => logEvent("audio_delete_failed"))));
-    }
-  }
-  redirect("/students");
 }
 
 // ------------------------------------------------------------------ sessions
@@ -256,12 +240,4 @@ export async function rerunAnalysisAction(formData: FormData): Promise<void> {
   if (plan === "transcribe") after(() => startTranscription(c.id, sessionId, defaultAudioDeps()).then(() => undefined));
   if (plan === "analyze") after(() => startAnalysis(c.id, sessionId));
   redirect(`/sessions/${sessionId}`);
-}
-
-export async function swapSpeakersAction(formData: FormData): Promise<void> {
-  const c = await requireCounselor();
-  const sessionId = idOf(formData, "session_id");
-  if (!sessionId) redirect("/students");
-  await withCounselor(c.id, (client) => swapSpeakers(client, c.id, sessionId));
-  redirect(`/sessions/${sessionId}?swapped=1`);
 }

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { checkStatusAction, rerunAnalysisAction, swapSpeakersAction } from "@/app/actions";
+import { checkStatusAction, rerunAnalysisAction } from "@/app/actions";
 import { AutoRefresh } from "@/components/AutoRefresh";
 import { ConfirmButton } from "@/components/ConfirmButton";
 import {
@@ -112,16 +112,16 @@ export default async function SessionPage({
       <SectionCard>
         <div className="mb-3 flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Transcript</h2>
-          <form action={swapSpeakersAction}>
-            <input type="hidden" name="session_id" value={s.id} />
-            <ConfirmButton
-              message="Swap who is the counselor and who is the student on every line of this transcript?"
-              confirmLabel="Yes, swap"
-              className={secondaryButton}
-            >
-              Swap speakers
-            </ConfirmButton>
-          </form>
+          <ConfirmButton
+            message="Swap who is the counselor and who is the student on every line of this transcript?"
+            confirmLabel="Yes, swap"
+            url={`/api/sessions/${s.id}/swap`}
+            method="POST"
+            then={`/sessions/${s.id}?swapped=1`}
+            className={secondaryButton}
+          >
+            Swap speakers
+          </ConfirmButton>
         </div>
         <ol className="space-y-1">
           {s.utterances.map((u) => (

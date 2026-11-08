@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { deleteStudentAction } from "@/app/actions";
 import { AutoRefresh } from "@/components/AutoRefresh";
 import { ConfirmButton } from "@/components/ConfirmButton";
 import { AddSessionForm } from "@/components/forms";
@@ -197,16 +196,18 @@ export default async function StudentPage({ params }: { params: Promise<{ id: st
         )}
       </SectionCard>
 
-      <form action={deleteStudentAction} className="pt-2 text-center">
-        <input type="hidden" name="student_id" value={student.id} />
+      <div className="pt-2 text-center">
         <ConfirmButton
           message="Delete this student and all of their sessions, transcripts, recordings and analyses? This cannot be undone."
           confirmLabel="Yes, delete student"
+          url={`/api/students/${student.id}`}
+          method="DELETE"
+          then="/students"
           className="text-xs text-muted hover:underline"
         >
           Delete student
         </ConfirmButton>
-      </form>
+      </div>
     </div>
   );
 }

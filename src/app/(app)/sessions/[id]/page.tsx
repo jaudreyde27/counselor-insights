@@ -116,6 +116,7 @@ export default async function SessionPage({
             <input type="hidden" name="session_id" value={s.id} />
             <ConfirmButton
               message="Swap who is the counselor and who is the student on every line of this transcript?"
+              confirmLabel="Yes, swap"
               className={secondaryButton}
             >
               Swap speakers

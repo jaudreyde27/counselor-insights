@@ -200,7 +200,8 @@ export default async function StudentPage({ params }: { params: Promise<{ id: st
       <form action={deleteStudentAction} className="pt-2 text-center">
         <input type="hidden" name="student_id" value={student.id} />
         <ConfirmButton
-          message="Delete this student and all of their sessions, transcripts and analyses? This cannot be undone."
+          message="Delete this student and all of their sessions, transcripts, recordings and analyses? This cannot be undone."
+          confirmLabel="Yes, delete student"
           className="text-xs text-muted hover:underline"
         >
           Delete student

@@ -137,8 +137,14 @@ export function startLogin(cfg: CognitoConfig, env: NodeJS.ProcessEnv = process.
   return res;
 }
 
-const back = (request: NextRequest, error: string) => {
-  const res = NextResponse.redirect(new URL(`/login?error=${error}`, request.url));
+/**
+ * Redirects must use the app's PUBLIC address (APP_BASE_URL, via cfg.redirectUri), never the address on the incoming
+ * request: behind the load balancer that is the server's internal address (seen on the first deploy, 2026-11-07).
+ */
+const publicUrl = (cfg: CognitoConfig, path: string) => new URL(path, cfg.redirectUri);
+
+const back = (cfg: CognitoConfig, error: string) => {
+  const res = NextResponse.redirect(publicUrl(cfg, `/login?error=${error}`));
   res.cookies.delete({ name: OAUTH_COOKIE, path: "/auth" });
   return res;
 };
@@ -162,7 +168,7 @@ export interface CallbackDeps {
  */
 export async function finishLogin(request: NextRequest, cfg: CognitoConfig, deps: CallbackDeps): Promise<NextResponse> {
   const url = new URL(request.url);
-  if (url.searchParams.get("error")) return back(request, "cancelled");
+  if (url.searchParams.get("error")) return back(cfg, "cancelled");
 
   let saved: { state?: string; verifier?: string } = {};
   try {
@@ -174,7 +180,7 @@ export async function finishLogin(request: NextRequest, cfg: CognitoConfig, deps
   const code = url.searchParams.get("code") ?? "";
   if (!saved.state || !saved.verifier || !code || !state || !sameString(state, saved.state)) {
     logEvent("login_state_mismatch");
-    return back(request, "expired");
+    return back(cfg, "expired");
   }
 
   let idToken: string | undefined;
@@ -194,7 +200,7 @@ export async function finishLogin(request: NextRequest, cfg: CognitoConfig, deps
     idToken = ((await res.json()) as { id_token?: string }).id_token;
   } catch {
     logEvent("login_token_exchange_failed");
-    return back(request, "failed");
+    return back(cfg, "failed");
   }
 
   let claims: Record<string, unknown>;
@@ -202,14 +208,14 @@ export async function finishLogin(request: NextRequest, cfg: CognitoConfig, deps
     claims = await deps.verify(idToken ?? "");
   } catch {
     logEvent("login_token_rejected");
-    return back(request, "failed");
+    return back(cfg, "failed");
   }
   const session = claimsToSession(claims);
   const exp = typeof claims.exp === "number" ? claims.exp : 0;
   const maxAge = exp - Math.floor(Date.now() / 1000);
-  if (!session || !idToken || maxAge <= 0) return back(request, "failed");
+  if (!session || !idToken || maxAge <= 0) return back(cfg, "failed");
 
-  const res = NextResponse.redirect(new URL("/students", request.url));
+  const res = NextResponse.redirect(publicUrl(cfg, "/students"));
   res.cookies.set(SESSION_COOKIE, idToken, {
     httpOnly: true,
     sameSite: "lax",

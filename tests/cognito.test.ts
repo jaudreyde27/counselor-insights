@@ -23,8 +23,8 @@ const cfg: CognitoConfig = {
   userPoolId: "us-west-2_TESTPOOL1",
   clientId: "test-client-id-123",
   domain: "https://test-prefix.auth.us-west-2.amazoncognito.com",
-  redirectUri: "http://localhost:3000/auth/callback",
-  logoutUri: "http://localhost:3000/login",
+  redirectUri: "https://studentcounseling.persimmon-care.com/auth/callback", // public address; the test requests below arrive on localhost, like the internal address behind the load balancer
+  logoutUri: "https://studentcounseling.persimmon-care.com/login",
 };
 const ISSUER = `https://cognito-idp.${cfg.region}.amazonaws.com/${cfg.userPoolId}`;
 const KID = "test-key-1";
@@ -160,6 +160,8 @@ describe("finishing sign-in (against the fake provider)", () => {
     }) as unknown as typeof fetch;
   const failed = (res: Response, code: string) => {
     expect(new URL(res.headers.get("location")!).pathname + new URL(res.headers.get("location")!).search).toBe(`/login?error=${code}`);
+    // The redirect goes to the app's PUBLIC address, not the address the request arrived on (behind the load balancer that is internal).
+    expect(new URL(res.headers.get("location")!).origin).toBe("https://studentcounseling.persimmon-care.com");
     expect(sessionCookie(res)).toBeUndefined(); // no session is ever started on a failure
   };
 
@@ -169,6 +171,7 @@ describe("finishing sign-in (against the fake provider)", () => {
     const res = await finishLogin(callback(), cfg, { verify, fetchFn: idp(token, calls), env: { NODE_ENV: "production" } as never });
 
     expect(new URL(res.headers.get("location")!).pathname).toBe("/students");
+    expect(new URL(res.headers.get("location")!).origin).toBe("https://studentcounseling.persimmon-care.com"); // not the request's own (internal) address
     expect(calls).toHaveLength(1);
     expect(calls[0].url).toBe(`${cfg.domain}/oauth2/token`);
     expect(Object.fromEntries(calls[0].body)).toEqual({

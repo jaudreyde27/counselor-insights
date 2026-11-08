@@ -9,9 +9,18 @@ A web tool for a student counselor who meets one-on-one with international stude
 | Phase | What | State |
 |---|---|---|
 | 0 | Setup: repo, Next.js scaffold, Docker Postgres, lint, tests | Done |
-| 1 | Text in, insights out (pasted transcripts, mock AI, screens) | Built, awaiting review |
-| 2 | Audio upload and transcription | Built with local stand-ins, awaiting review |
-| 3 | AWS deployment | Not started |
+| 1 | Text in, insights out (transcript upload, screens) | Done, working on the live site |
+| 2 | Audio upload and transcription (S3 + AssemblyAI) | Done, working on the live site |
+| 3 | AWS deployment | Done: runs on AWS (us-east-2) at the address below |
+
+## Try the live prototype
+
+**https://studentcounseling.persimmon-care.com** (a class prototype, switched off after December 15, 2026).
+
+- **Getting a profile.** There is no self sign-up. The project owner creates a profile for each teammate from their email address (`scripts/add-user.sh`). AWS then emails a temporary password; you choose your own at first sign-in. Your students and sessions are private to your profile.
+- **Adding a session.** Open (or create) a student, then use **Add a session**: upload an **audio recording** (MP3, M4A or WAV; tick the consent box) or a **transcript file** (`.txt` or `.json`). Five fictional sample transcripts are in [`fixtures/upload/`](fixtures/upload/) (plain text, one line per turn, starting `Counselor:` or `Student:`). Write your own in the same format.
+- **All data must be fictional.** Never upload a real student's recording or transcript, and never use a real person's name or details. Spoken names in audio reach AssemblyAI and Claude.
+- **Feedback.** Open a GitHub issue, or tell the project owner. Please describe what you did and what you expected; do not paste transcripts that contain anything real.
 
 ## Running locally
 
@@ -33,7 +42,7 @@ npm run db:seed
 npm run dev
 ```
 
-Open http://localhost:3000 and use the **development login** (fake counselors "Alex Rivera", who has demo students, and "Sam Patel", who has none). The dev login only works for local development: it is switched on by `AUTH_MODE=dev` in `.env`, and the app refuses to run in production with it on. `npm run db:seed -- --reset` clears and re-adds the demo students. In the app, adding a session is a file upload: **audio recording** is the main option, and a **transcript file** (.txt or .json) is the alternative. Audio transcription is not connected until Phase 2, so to try the tool use the **Transcript file** tab and choose one of the five fictional files in `fixtures/upload/`. The mock AI then analyzes it.
+Open http://localhost:3000 and use the **development login** (fake counselors "Alex Rivera", who has demo students, and "Sam Patel", who has none). The dev login only works for local development: it is switched on by `AUTH_MODE=dev` in `.env`, and the app refuses to run in production with it on. `npm run db:seed -- --reset` clears and re-adds the demo students. In the app, adding a session is a file upload: **audio recording** is the main option, and a **transcript file** (.txt or .json) is the alternative. For a local audio test use the silent placeholder files in `fixtures/audio/` (the local stand-in transcriber answers with a fictional transcript); for a local transcript test use the **Transcript file** tab and one of the five fictional files in `fixtures/upload/`. The mock AI then analyzes it.
 
 `db:migrate` is safe to run again: it only applies new files from `migrations/`. The app connects as a limited `app_user` login so row-level security applies (a counselor can only see their own rows). Tests use a separate `<POSTGRES_DB>_test` database, so your dev data is never touched.
 
@@ -60,7 +69,7 @@ npm run analyze -- fixtures/transcripts/02-visa-fear.json
 
 This runs both analysis calls on a transcript file and prints the verified result. It does not touch the database or the UI. Add `--json` for machine-readable output (logs go to stderr, so the JSON stays clean). A transcript file is a JSON array of `{ "speaker": "counselor" | "student", "text": "..." }`. Five fictional examples are in `fixtures/transcripts/` (the same text as `.txt` files for the upload box is in `fixtures/upload/`).
 
-**The mock AI.** `.env.example` sets `LLM_MODE=mock`, so no AWS or API key is needed. For the five fixtures the mock returns hand-written results (in `fixtures/mock/`). For any other text it matches simple keywords and labels its output "(mock)". Real analysis with Claude on Amazon Bedrock is built but has **not yet been run against real AWS**: set `LLM_MODE` to anything other than `mock`, and set `BEDROCK_MODEL_ID` to a US-only inference profile id from the Bedrock console. Prompts live in `prompts/v3/` (selected by `PROMPT_VERSION`; older versions are kept so earlier runs can be reproduced); the taxonomy lives in `config/criteria.json`.
+**The mock AI.** `.env.example` sets `LLM_MODE=mock`, so no AWS or API key is needed. For the five fixtures the mock returns hand-written results (in `fixtures/mock/`). For any other text it matches simple keywords and labels its output "(mock)". The live site uses real analysis with Claude on Amazon Bedrock (Sonnet 4.6). To try it from your own computer, sign in to AWS and set `LLM_MODE` to anything other than `mock`, and set `BEDROCK_MODEL_ID` to a US-only inference profile id from the Bedrock console. Prompts live in `prompts/v3/` (selected by `PROMPT_VERSION`; older versions are kept so earlier runs can be reproduced); the taxonomy lives in `config/criteria.json`.
 
 ## Audio: how it works, and what is real
 
@@ -68,7 +77,7 @@ Adding a session by audio follows the spec: the browser asks the server for a li
 
 **Local stand-ins (the defaults in `.env.example`).** `STORAGE_MODE=local` keeps recordings in a git-ignored `.local-audio/` folder behind real signed, expiring links, and `TRANSCRIPTION_MODE=mock` returns one of the fictional transcripts, then calls the app's real webhook. The mock does not listen to the audio: it picks a transcript from a hidden marker in the file (or a hash of its contents), never from the file name. Try it with the silent placeholder files in `fixtures/audio/` (regenerate with `npm run fixtures:audio`). Both stand-ins are refused in a production build.
 
-**Real S3 and AssemblyAI are written but have never been run.** They need accounts and keys, set up together step by step in [`docs/AWS_SETUP.md`](docs/AWS_SETUP.md). The AssemblyAI webhook cannot reach a computer at home, so it can only be tested after the deploy.
+**Real S3 and AssemblyAI run on the live site** (checked with a fictional recording). Setup is in [`docs/AWS_SETUP.md`](docs/AWS_SETUP.md). The AssemblyAI webhook cannot reach a computer at home, so audio transcription can only be tested on the live site.
 
 Deleting a student also deletes their recordings. Recordings are otherwise kept until deleted by hand (see "Audio retention").
 
@@ -78,14 +87,14 @@ This is a class project, due **December 2, 2026**, and it is **switched off afte
 
 ## Deploying
 
-The deployment is written but **has never been run**; no AWS account exists yet. It is set up together, step by step, in [`docs/AWS_SETUP.md`](docs/AWS_SETUP.md).
+The app runs on AWS in **us-east-2** (one stack, `CounselorInsights`). **Only the project owner deploys**, from their own computer, because the AWS account is on the free plan and an account-level rule blocks the GitHub-to-AWS connection that automatic deploys would need. So merging to `main` does **not** change the live site.
 
-- **Container:** `Dockerfile` (a standard image: the app, plus a one-off migration runner `node dist/migrate.cjs`). Build it with `docker build -t counselor-insights .`
-- **Infrastructure (AWS CDK, TypeScript):** `infra/`. One stack: network (no NAT gateway), RDS Postgres 16, the private audio bucket, Cognito, the load balancer with HTTPS, one Fargate task, alarms and CloudTrail, a role GitHub can use to deploy, and a scheduled scale to zero for December 16, 2026. `cd infra && npm install && npx cdk synth -c alertEmail=... -c cognitoDomainPrefix=... -c bedrockModelId=...` produces the CloudFormation template offline; `npm test` checks it.
-- **Sign-in:** `AUTH_MODE=cognito` (AWS Cognito Managed Login, code flow with PKCE). Local development uses `AUTH_MODE=dev`, which is refused in a production build.
-- **CI/CD (GitHub Actions):** `.github/workflows/ci.yml` runs lint, type check, tests and a build on every pull request; `deploy.yml` builds the image, runs the migrations as a one-off task and updates the service on a merge to `main`. It signs in to AWS with a short-lived token (OIDC), so no AWS keys are stored, and it does nothing until the repository variable `AWS_DEPLOY_ROLE_ARN` is set.
-- **DNS:** `scripts/dns-records.sh` prints the two records to add by hand in Cloudflare. **Keys:** `scripts/store-secret.sh` stores them in Secrets Manager without them appearing anywhere.
-- **Ending:** the app switches itself off after December 15, 2026 and the cloud teardown is in [`docs/SHUTDOWN.md`](docs/SHUTDOWN.md).
+- **To deploy a change:** the project owner runs `aws login --region us-east-2`, then `scripts/deploy-local.sh` (builds the image, pushes it, runs the database migration and starts the new version). Use a fast network: the image is about 94 MB.
+- **Container:** `Dockerfile` (the app, plus a one-off migration runner). **Infrastructure (AWS CDK, TypeScript):** `infra/` (network with no NAT gateway, RDS Postgres 16, a private audio bucket, Cognito, a load balancer with HTTPS, one Fargate task, alarms, CloudTrail, a scheduled scale to zero for December 16, 2026). `cd infra && npx cdk synth ...` produces the template offline; `npm test` checks it.
+- **Sign-in:** `AUTH_MODE=cognito` (Cognito Managed Login with PKCE). Local development uses `AUTH_MODE=dev`, which is refused in a production build.
+- **CI (GitHub Actions):** `.github/workflows/ci.yml` runs lint, type check, tests and a build on every pull request. `deploy.yml` stays in the repository but is inactive here (it needs the `AWS_DEPLOY_ROLE_ARN` variable, which this account cannot create).
+- **Secrets and DNS:** `scripts/store-secret.sh` stores keys in Secrets Manager without them appearing anywhere; `scripts/dns-records.sh` prints the DNS records. **New teammates:** `scripts/add-user.sh email@example.com`.
+- **Ending:** the app switches itself off after December 15, 2026; the cloud teardown is in [`docs/SHUTDOWN.md`](docs/SHUTDOWN.md).
 
 ## Working on this project
 
@@ -98,7 +107,7 @@ Audio files are kept until the project ends and are deleted by hand. There is no
 ## Known limits
 
 - Speaker labels can be wrong on accented English and overlapping speech. A "Swap speakers" control is the fix.
-- Transcription quality on accented English is untested until the team's recordings are run.
+- Transcription quality on accented English is untested until the team's recordings are run. Only synthetic computer voices have been tried so far.
 - Interpretations can sound plausible and be wrong. Quote checking proves a quote exists, not that the theme is right.
 - Student names spoken in audio reach AssemblyAI and Claude. This is acceptable only because all data is fictional. It needs further work before any real use.
 - Audio is kept until deleted by hand.

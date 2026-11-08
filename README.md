@@ -98,6 +98,16 @@ The app runs on AWS in **us-east-2** (one stack, `CounselorInsights`).
 - **Secrets and DNS:** `scripts/store-secret.sh` stores keys in Secrets Manager without them appearing anywhere; `scripts/dns-records.sh` prints the DNS records. **New teammates:** `scripts/add-user.sh email@example.com`.
 - **Ending:** the app switches itself off after December 15, 2026; the cloud teardown is in [`docs/SHUTDOWN.md`](docs/SHUTDOWN.md).
 
+## Contributing (for teammates)
+
+1. Accept the GitHub invitation, then `git clone https://github.com/jaudreyde27/counselor-insights.git`.
+2. Follow **Running locally** above. You do not need AWS access: everything runs on your computer with the mock AI.
+3. Make a branch (`git checkout -b my-change`), make your change, and run `npm run lint`, `npm run typecheck` and `npm test`.
+4. Push the branch and open a **pull request**. The tests run automatically on GitHub. `main` is protected: the `test` check must pass and **one teammate must approve** before you can merge.
+5. When a pull request is merged into `main`, it **deploys to the live site automatically** (see Deploying). Do not merge anything you would not want on the live site.
+
+Rules: fictional data only, in code, tests, issues and sample files. Never commit `.env`, passwords or keys. Add a short entry to [`WORK_LOG.md`](WORK_LOG.md) after a meaningful change.
+
 ## Working on this project
 
 Read the latest entries in [`WORK_LOG.md`](WORK_LOG.md) before changing anything, and add an entry after each meaningful change. See [`AGENTS.md`](AGENTS.md) and [`CLAUDE.md`](CLAUDE.md) for the rules for AI coding tools.

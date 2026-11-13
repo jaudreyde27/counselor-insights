@@ -1,0 +1,60 @@
+Counselor: Hi D, thank you for staying a little after work to do this. Is it okay if I record our conversation?
+Student: Yes, is okay. No problem.
+Counselor: You can skip any question you don't want to answer. And please don't tell me anything about immigration papers or document numbers.
+Student: Okay. Thank you.
+Counselor: How long have you been in the U.S., and what does a normal week look like for you?
+Student: Two years. Two years in March. My week... Monday to Friday I clean houses. Two houses every day, sometimes three. In the morning I take Valentina to school, and my sister pick her up in the afternoon. Saturday I clean only one house, half day. Sunday is for church and for Valentina.
+Counselor: What has been the hardest part of living here so far?
+Student: The hardest... the language. Is very difficult for me. I understand more than I can speak. When people talk fast, I am lost. And the rent. Everything is very expensive here.
+Counselor: What do you miss most about home?
+Student: My mom. She is in Cali. And the food. My mom make sancocho on Sundays, and all the family comes. Here is only me, my sister, her husband and the kids. Is nice, but is not the same.
+Counselor: When something goes wrong, who do you talk to?
+Student: My sister. She is here eight years, she know more. And I call my mom, but I don't tell her the bad things. She worry too much.
+Counselor: Can you tell me about a time you felt out of place, or unsure you belonged here?
+Student: Hmm. At Valentina's school. The meeting with the teacher. The other moms talk with the teacher, they ask many questions. I just say "yes, yes, thank you." Valentina translate for me. She is six. I feel a little bad. The mom should help the daughter, not the daughter help the mom.
+Counselor: Do you feel pressure to make this move worth it for anyone?
+Student: Yes. For Valentina. I come here for her. For her future, the school, everything. So I have to work hard. And for my mom. I send money every month for her medicine.
+Counselor: Is there anything that keeps you up at night?
+Student: Sometimes the money. The rent go up again in January. And when Valentina is sick, I worry, because if I don't work, I don't get paid.
+Counselor: How is your energy now compared to when you first arrived?
+Student: More tired, I think. The first months I was excited, everything is new. Now my back hurts sometimes, from the cleaning. But is okay. I am strong.
+Counselor: What has helped you get through the harder days?
+Student: God, and the church. And Valentina. She sing the songs from school in English, and she correct my English. "Mami, is not 'she have,' is 'she has.'"
+Counselor: You said it's okay. What does okay look like on a normal day?
+Student: Okay is... I work, I come home, I cook, I sleep. No problems. Some days I am very tired and a little sad, but the next day is better.
+Counselor: What did you have to figure out here that works differently than in Colombia?
+Student: Many things. The bus. The bank, I needed help to open the account. The doctor. Here you need appointment for everything, and you wait many weeks. In Colombia you go to the clinic and they see you.
+Counselor: When you need something like a doctor, a bank account or housing, how do you figure out where to start?
+Student: I ask my sister. Or the lady at church, she help many people. If not, I ask Valentina to look in the phone.
+Counselor: How do conversations in English feel at work, compared to with friends?
+Student: At work is okay, because the work is always the same. The clients say "please clean the kitchen, the bathroom," I understand. But a long conversation, no. With my friends I speak Spanish, so no problem.
+Counselor: Is anything confusing about how things work at your job, or at Valentina's school?
+Student: The school send many papers and emails. Field trip, picture day, money for something. Sometimes I don't understand and I miss things. One time everybody wear pajamas to school, and Valentina no. She was sad. I feel very bad that day.
+Counselor: If you needed reliable information about work rules, would you know where to go?
+Student: Sorry, I prefer not to talk about this.
+Counselor: Of course, that's completely fine.
+Student: Thank you.
+Counselor: Is there anything about money here, like credit, taxes or budgeting, that you had to learn from scratch?
+Student: Taxes, yes. I don't understand the taxes. Last year a man from the church help me with the forms. I pay him fifty dollars. I hope it is correct.
+Counselor: Think of the last time you needed help with something. How did you go about asking?
+Student: Last month the car make a noise. I ask my brother-in-law. But I don't like to ask too much, he works a lot.
+Counselor: Has a rule, a cost or an office ever stopped you from doing something you knew how to do?
+Student: The cost, yes. I want to study English at the community college, but the classes are at night, and who stay with Valentina? And it cost money.
+Counselor: Have your education and past work experience counted here?
+Student: No. In Colombia I was auxiliar de enfermería, like a nurse assistant, for five years in a hospital. Here they say I need to study again, and take the English test. So I clean houses. Is honest work. I am not ashamed.
+Counselor: What has gotten in the way of finding work, or the right kind of work?
+Student: The English. And the papers for the nursing. And the time. I need to work every day for the rent, so I don't have time to study.
+Counselor: Have you been treated differently because of where you're from or how you speak?
+Student: Hmm, I don't know how to answer. Sometimes, maybe. One time in the store, the cashier talk to me very fast, and I say "sorry, again please," and she say it more loud and roll her eyes. The people behind me look at me. I feel embarrassed. But most people are nice. You are very nice.
+Counselor: Have you had any conflicts with roommates, coworkers or neighbors?
+Student: No. Well, the neighbor upstairs is very loud at night, but I don't say nothing. No problems.
+Counselor: Has housing, transport, food or healthcare been hard to get or afford?
+Student: Housing, yes. Very expensive. Valentina and me sleep in one room in my sister's apartment. Is small, but we are together. The car is old, but it works, thank God.
+Counselor: Do responsibilities to family, here or back home, shape your choices?
+Student: Yes, of course. Everything is for Valentina and my mom. I don't buy things for me. Maybe one day.
+Counselor: Has anything made you hesitant to ask for help, like what others might think?
+Student: Yes, a little. I don't want people to think I come here to ask for things. I come here to work. So I prefer to do it myself.
+Counselor: Is there anything we didn't ask about that matters to you?
+Student: Maybe how can i find more employees? If you know anyone who also needs help on cleaning house or chores. That would help me a lot.
+Counselor: Definitely! Last question: how comfortable were you being recorded? Was there anything you held back?
+Student: Is okay. A little nervous, because of my English. But thank you for asking me these things. Hope it can help for your project.

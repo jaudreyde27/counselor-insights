@@ -1,0 +1,30 @@
+Counselor: Hi Raj, thanks for making time. Okay if I record?
+Student: Yeah, totally, go for it.
+Counselor: You can skip anything, and please don't share visa specifics or document numbers.
+Student: Sure, makes sense.
+Counselor: How long have you been here, and what's a normal week like?
+Student: Four months, a little over. So, normal week, I'm in the office Tuesday to Thursday, it's hybrid, Monday and Friday from home. Standup at 9:30, usually a bunch of meetings, then I try to block afternoons for actual coding. Evenings, honestly, I'm often still online, because half my team is in Bangalore, so there's overlap at night. Weekends we try to explore. We did Mount Rainier last month, it was gorgeous.
+Counselor: What's been the hardest part of living here?
+Student: Hmm. Honestly, logistics. Like, setting everything up. Bank, lease, the apartment wanted a credit history, which obviously I don't have, so we had to pay three months upfront. Car insurance quotes were insane because there's no US driving record. It's all solvable, it's just a lot of admin.
+Counselor: How's work going?
+Student: Work is great, really. Team's solid, my manager's supportive. It's a big step up from my last role.
+Counselor: And how is your wife finding it here?
+Student: Yeah, so, that's... it's more of an adjustment for her. She was a product designer in Bangalore, like, really good, she led a team. Here she can't work right now, because of how her visa works. So she's at home. She's taking some online courses, doing some portfolio stuff, you know, building up.
+Counselor: How's that going for her?
+Student: It's... you'd have to ask her. No, I think she's bored. I think she's more than bored. Some days I come out of a meeting and she's just sitting on the balcony, and I'm like, "You okay?" And she says, "Yeah, fine." Which, you know.
+Counselor: What does that bring up for you?
+Student: Me? I mean... I'm the reason we're here. It was my job. She said yes, she was excited, we both were. But I kind of sold it to her. Like, "Oh, there'll be options, you'll find something." And now, yeah. I don't know. We argue more. About small stuff. Dishes. Whether I'm working too late. Which, I am.
+Counselor: That sounds like a lot to hold.
+Student: Eh. It's a phase. Every couple goes through this when they move.
+Counselor: Is there anything that keeps you up at night?
+Student: You mean apart from the 11 p.m. calls with Bangalore? Honestly... layoffs. My company did a round in September. Not my team, but. If I lose this job, it's not just finding another job, there's a clock on how long we can stay. So I check the internal Slack a lot. Like, a lot. I check the layoff forums every morning, which, I know, is not healthy.
+Counselor: What would help with that?
+Student: Honestly, nothing really helps except being indispensable. So I just work more. Which loops back to the arguments.
+Counselor: Has a rule, a cost or an office ever stopped you from doing something you knew how to do?
+Student: For her, yes, obviously, the work authorization. For me, credit. Like, I know how credit works in theory. But the system won't let me in. Secured card, five hundred dollar limit. I make good money and I have a five hundred dollar limit. It's absurd. Actually, okay, I don't fully understand the scoring. Like, why did paying the card off early make it drop? Someone explained utilization and I sort of got it.
+Counselor: What has helped on harder days?
+Student: Cricket. There's a league here, Sunday mornings. And there's a big Indian community on the Eastside, so we've made some friends. Actually, my wife has made more friends than me. She's good at that.
+Counselor: Is there anything we didn't ask about that matters to you?
+Student: Hmm. Maybe, like, are there resources for spouses in her situation? Not, like, therapy. Just groups or whatever. I'd want her to have something that's hers.
+Counselor: How comfortable were you being recorded? Anything you held back?
+Student: Pretty comfortable. I mean, I probably made it sound more under control than it is. Occupational hazard.

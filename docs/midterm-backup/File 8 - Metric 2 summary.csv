@@ -1,0 +1,3 @@
+set,pairs_counted,strict_hits,strict_pct,hits_with_same_issue_count,same_issue_pct,target
+Mock,29,17,59%,21,72%,70%
+Real,24,12,50%,14,58%,70%

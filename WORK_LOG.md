@@ -6,6 +6,16 @@ Entry format: timestamp and time zone, author, summary, affected components, ver
 
 ---
 
+## 2026-11-12 23:44 PT Midterm backup materials added to the repository
+
+- **Author:** Audrey DeGuerrera (built with Claude Code)
+- **Summary:** Added `docs/midterm-backup/` (25 files plus a README): the 12 upload-ready transcripts in `transcripts_for_upload/`, and Files 1 to 9 and the index from the team's shared Drive BACKUP folder (interview guide, taxonomy V1, lookup table, form responses, tool output, scoring sheets, quote check). The project owner confirmed that the files named `real_*` are fictional.
+- **Affected components:** documentation only; no code, prompts or config changed.
+- **Verification:** files were downloaded unchanged from Drive (original formats, byte sizes match; the zip lists the same 12 transcripts).
+- **Handoff:** the `MIDTERM BACKUP INDEX.docx` describes four "real interviews" and form responses from "real interviewees". The owner states they are fictional, but if any teammate knows otherwise, remove them from the repository history before sharing the repository further.
+
+---
+
 ## 2026-11-07 AWS setup started: account created, root MFA skipped
 
 - **Author:** Audrey DeGuerrera (built with Claude Code)

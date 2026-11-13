@@ -1,0 +1,36 @@
+transcript,code,code_label,where_the_pair_came_from,reviewer_decision,counted_in_recall,tool_finding_with_matching_label,strict_result,same_issue_finding_under_other_label,result_with_same_issue_count,note
+Mariana,K05,Daily life systems,Answer key,Include,yes,Difficulty navigating health insurance and school paperwork,hit,,hit,
+Mariana,B07,Credential and experience recognition,Answer key,Include,yes,Professional credentials not transferable here,hit,,hit,
+Mariana,B08,Social support access,Answer key,Include,yes,Limited local support network,hit,,hit,
+Mariana,B04,Financial strain,Answer key,Include,yes,Precarious finances with no safety margin,hit,,hit,
+Mariana,B09,Discrimination and exclusion,Answer key,Include,yes,,miss,,miss,
+Jiayi,K03,Academic norms,Answer key,Include,yes,Unfamiliarity with participation and office-hours culture,hit,,hit,
+Jiayi,K07,Money management systems,Answer key,Include,yes,,miss,,miss,
+Jiayi,B11,Help seeking stigma and judgment,Answer key,Include,yes,Family and cultural stigma around seeking counselling,hit,,hit,
+Jiayi,B13,Family obligations and pressure,"AI-suggested, not in answer key",Include,yes,,miss,Pressure to justify the family's financial sacrifice,hit (same issue),Coverage call made provisionally; reviewer to confirm.
+Tesfaye,B07,Credential and experience recognition,Answer key,Include,yes,Home-country teaching credentials not directly recognized,hit,,hit,
+Tesfaye,K05,Daily life systems,Answer key,Include,yes,Confusion navigating the U.S. healthcare and insurance system,hit,,hit,
+Tesfaye,B13,Family obligations and pressure,Answer key,Include,yes,,miss,Pressure to appear successful for family back home,hit (same issue),
+Tesfaye,B11,Help seeking stigma and judgment,Answer key,Include,yes,Community visibility makes it hard to seek help,hit,,hit,
+Tesfaye,B04,Financial strain,Answer key,Include,yes,,miss,,miss,
+Tesfaye,B12,Living conditions and service access,Answer key,Include,yes,,miss,,miss,
+Fatima,K01,English comprehension and expression,Answer key,Include,yes,Language barrier affecting daily life,hit,,hit,
+Fatima,B08,Social support access,Answer key,Include,yes,,miss,Isolation and lack of support during the day,hit (same issue),
+Fatima,K05,Daily life systems,Answer key,Include,yes,Uncertainty about how to access healthcare and other services without support,hit,,hit,
+Fatima,B12,Living conditions and service access,Answer key,Include,yes,,miss,Uncertainty about how to access healthcare and other services without support,hit (same issue),
+Fatima,B11,Help seeking stigma and judgment,"AI-suggested, not in answer key",Include,yes,Reluctance to seek help because she feels her problems are not serious enough,hit,,hit,
+Raj,B01,Visa and work restrictions,Answer key,Include,yes,Wife blocked from working due to visa restrictions,hit,,hit,
+Raj,B10,Interpersonal conflict,Answer key,Include,yes,,miss,,miss,
+Raj,K07,Money management systems,Answer key,Include,yes,,miss,,miss,
+Raj,B04,Financial strain,"AI-suggested, not in answer key",Exclude,no,Locked out of normal financial access despite stable income,,,,
+Olena,K01,English comprehension and expression,Answer key,Include,yes,,miss,,miss,
+Olena,B07,Credential and experience recognition,Answer key,Include,yes,Professional credentials and experience not recognised here,hit,,hit,
+Olena,K05,Daily life systems,"AI-suggested, not in answer key",Exclude,no,Difficulty navigating everyday systems without sufficient English,,,,
+Diego,B10,Interpersonal conflict,Answer key,Include,yes,Strained and unfamiliar relationship with his father and stepmother,hit,,hit,
+Diego,B02,Institutional bureaucracy,"Answer key (K03), relabelled by reviewer",Include,yes,Confusing academic planning process led to a wasted class,hit,,hit,"Reviewer judged this a system barrier, not an academic-norms gap."
+Diego,B09,Discrimination and exclusion,Answer key,Include,yes,"Feeling caught between two communities, belonging to neither",hit,,hit,
+Diego,K01,English comprehension and expression,"AI-suggested, not in answer key",Exclude,no,,,,,Transcript does not show English as the problem.
+Kofi,K05,Daily life systems,"AI-suggested, not in answer key",Include,no,,,,,Control interview. Removed from the recall count.
+Kofi,B02,Institutional bureaucracy,"AI-suggested, not in answer key",Exclude,no,,,,,
+Kofi,B09,Discrimination and exclusion,"AI-suggested, not in answer key",Exclude,no,,,,,
+Olena,B13,Family obligations and pressure,"Answer key, added by reviewer (missing from the AI first pass)",Include,yes,,miss,,miss,In the answer key but missing from the first pass; added by reviewer.
